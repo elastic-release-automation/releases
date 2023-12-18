@@ -8,6 +8,10 @@ on:
 
 permissions:
   contents: read
+
+# Avoid concurrency so we can watch the releases correctly
+concurrency:
+  group: ${{ github.workflow }}
   
 jobs:
   orchestrate-minor-release:

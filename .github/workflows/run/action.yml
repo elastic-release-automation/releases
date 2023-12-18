@@ -39,6 +39,8 @@ runs:
         gh workflow run ${WORKFLOW_NAME} \
           --field "version=${GITHUB_REF#refs/*/}" \
           --repo "${REPO}"
+        echo "wait for a bit until the request is processed."
+        sleep 5
         ID=$(gh run list --workflow=${WORKFLOW_NAME} --repo "${REPO}" --limit 1 --json workflowDatabaseId --jq '.[].workflowDatabaseId')
         gh run watch --repo "${REPO}" $ID
       env:
