@@ -36,14 +36,20 @@ runs:
     - name: trigger workflow in ${{ inputs.project }}
       shell: bash
       run: |-
-        gh workflow run ${WORKFLOW_NAME} \
+        gh workflow run run-${{ inputs.release-type}}-release \
           --field "version=${GITHUB_REF#refs/*/}" \
           --repo "${REPO}"
-        echo "wait for a bit until the request is processed."
-        sleep 5
-        ID=$(gh run list --workflow=${WORKFLOW_NAME} --repo "${REPO}" --limit 1 --json workflowDatabaseId --jq '.[].workflowDatabaseId')
-        gh run watch --repo "${REPO}" $ID
       env:
         REPO: 'elastic-release-automation/${{ inputs.project }}'
-        GH_TOKEN: ${{ env.GITHUB_TOKEN }}
-        WORKFLOW_NAME: run-${{ inputs.release-type}}-release
+
+    - name: wait for workflow completion
+      shell: bash
+      run: |-
+        set +e
+        sleep 5
+        gh run list --workflow=run-${{ inputs.release-type}}-release --repo "${REPO}" --limit 1 || true
+        gh run \
+            watch \
+            --repo "${REPO}" $(gh run list --workflow=run-${{ inputs.release-type}}-release --repo "${REPO}" --limit 1 --json workflowDatabaseId --jq '.[].workflowDatabaseId')
+      env:
+        REPO: 'elastic-release-automation/${{ inputs.project }}'
