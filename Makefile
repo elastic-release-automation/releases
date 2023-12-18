@@ -10,7 +10,6 @@ TIME=$(shell date +'%Y_%m_%d-%H_%M_%S')
 .PHONY: add-repo
 add-repo: ## Add the repo references in the releases repository
 	@echo "::group::$@"  # Helping to group logs in GitHub actions
-	gh repo clone $(OWNER)/$(PROJECT) .repos/$(PROJECT)
 	git checkout -b feature/github-$(PROJECT)_$(TIME)
 	cp minor minor.bck
 	cp patch patch.bck
@@ -50,7 +49,10 @@ link-created-github-issues: ## Create GitHub action env variables on the fly
 .PHONY: prepare-repo
 prepare-repo: ## (INTERNAL) Prepare the repository for GitHub actions
 	@echo "::group::$@"  # Helping to group logs in GitHub actions
-	gh repo clone $(OWNER)/$(PROJECT) .repos/$(PROJECT)
+	if [ ! -d .repos/$(PROJECT) ] ; then \
+		gh repo clone $(OWNER)/$(PROJECT) .repos/$(PROJECT) \
+	fi
+	git checkout main
 	@echo "::endgroup::"
 
 .PHONY: prepare-workflow-files
