@@ -13,8 +13,8 @@ add-repo: ## Add the repo references in the releases repository
 	git checkout -b feature/github-$(PROJECT)_$(TIME)
 	cp minor minor.bck
 	cp patch patch.bck
-	echo "$(OWNER)/$(PROJECT)" >> minor.bck
-	echo "$(OWNER)/$(PROJECT)" >> patch.bck
+	echo "$(PROJECT)" >> minor.bck
+	echo "$(PROJECT)" >> patch.bck
 	sort minor.bck -u > minor
 	sort patch.bck -u > patch
 	rm minor.bck patch.bck
