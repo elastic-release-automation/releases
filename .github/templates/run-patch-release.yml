@@ -40,5 +40,6 @@ jobs:
       - name: setup release version
         run: |-
           VERSION=${GITHUB_REF#refs/*/patch-}
+          echo "VERSION=${VERSION}"     >> $GITHUB_ENV
           echo "### patch - ${VERSION}" >> $GITHUB_STEP_SUMMARY
       - run: echo "add your code for ${VERSION}"

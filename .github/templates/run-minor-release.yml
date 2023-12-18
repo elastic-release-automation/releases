@@ -40,5 +40,6 @@ jobs:
       - name: setup release version
         run: |-
           VERSION=${GITHUB_REF#refs/*/minor-}
+          echo "VERSION=${VERSION}"     >> $GITHUB_ENV
           echo "### minor - ${VERSION}" >> $GITHUB_STEP_SUMMARY
       - run: echo "add your code for ${VERSION}"
