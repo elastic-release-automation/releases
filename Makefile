@@ -10,6 +10,7 @@ TIME=$(shell date +'%Y_%m_%d-%H_%M_%S')
 .PHONY: add-repo
 add-repo: ## Add the repo references in the releases repository
 	@echo "::group::$@"  # Helping to group logs in GitHub actions
+	gh repo clone $(OWNER)/$(PROJECT) .repos/$(PROJECT)
 	git checkout -b feature/github-$(PROJECT)_$(TIME)
 	cp minor minor.bck
 	cp patch patch.bck
