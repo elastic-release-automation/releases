@@ -20,8 +20,10 @@ add-repo: ## Add the repo references in the releases repository
 	rm minor.bck patch.bck
 	git add .
 	git commit -m "[release] $(PROJECT)"
-	git remote -v; \
-	git push --set-upstream origin feature/github-$(PROJECT)_$(TIME); \
+	git remote -v
+	git --no-pager log
+	git --no-pager diff HEAD~1
+	git push --set-upstream origin feature/github-$(PROJECT)_$(TIME)
 	gh pr create --title "[release] $(PROJECT)" \
 		--body "A new project has been added to the release automation - https://github.com/$(OWNER)/$(PROJECT).git. @$(AUTHOR) requested it $(ISSUE_URL)" \
 		--assignee "$(AUTHOR)" \
