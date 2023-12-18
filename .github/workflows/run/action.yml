@@ -50,6 +50,6 @@ runs:
         gh run list --workflow=run-${{ inputs.release-type}}-release --repo "${REPO}" --limit 1 || true
         gh run \
             watch \
-            --repo "${REPO}" $(gh run list --workflow=run-${{ inputs.release-type}}-release --repo "${REPO}" --limit 1 --json workflowDatabaseId --jq '.[].workflowDatabaseId')
+            --repo "${REPO}" $(gh run list --workflow=run-${{ inputs.release-type}}-release --repo "${REPO}" --limit 1 --json databaseId --jq '.[].databaseId')
       env:
         REPO: 'elastic-release-automation/${{ inputs.project }}'
