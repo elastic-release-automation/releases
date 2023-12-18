@@ -1,6 +1,12 @@
 # releases
 
-Automate the release for the onboarded projects.
+Automate the release for the onboarded projects using Git tags with semver.
+
+[![run-release](https://github.com/elastic-release-automation/releases/actions/workflows/run-release.yml/badge.svg)](https://github.com/elastic-release-automation/releases/actions/workflows/run-release.yml)
+
+## Why
+
+Git tags act as a GitHub events, hence there is no need to use the GitHub UI.
 
 ## How to use this?
 
