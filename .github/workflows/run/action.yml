@@ -33,6 +33,20 @@ runs:
         email: ${{ env.GIT_EMAIL }}
         token: ${{ env.GITHUB_TOKEN }}
 
+    ## Use git tag events (alternative 2)
+    - name: trigger workflow in ${{ inputs.project }}
+      shell: bash
+      run: |-
+        gh repo clone "$REPO"
+        cd $PROJECT
+        git tag "${TYPE}-${GITHUB_REF#refs/*/}"
+        git push --tags
+      env:
+        PROJECT: ${{ inputs.project }}
+        REPO: 'elastic-release-automation/${{ inputs.project }}'
+        TYPE: ${{ inputs.release-type }}
+
+    ## Use github workflow events (alternative 1)
     - name: trigger workflow in ${{ inputs.project }}
       shell: bash
       run: |-
@@ -60,16 +74,3 @@ runs:
         echo "* ${{ inputs.project }}@${GITHUB_REF#refs/*/} - See [build](${URL})." >> $GITHUB_STEP_SUMMARY
       env:
         REPO: 'elastic-release-automation/${{ inputs.project }}'
-
-    ## Use git tag events (alternative 2)
-    - name: trigger workflow in ${{ inputs.project }}
-      shell: bash
-      run: |-
-        gh repo clone --repo "${REPO}"
-        cd $PROJECT
-        git tag "${TYPE}-${GITHUB_REF#refs/*/}"
-        git push --tags
-      env:
-        PROJECT: ${{ inputs.project }}
-        REPO: 'elastic-release-automation/${{ inputs.project }}'
-        TYPE: ${{ inputs.release-type }}
