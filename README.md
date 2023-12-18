@@ -12,7 +12,7 @@ If the name of the branch contains a patch equal to `0` then it will run a minor
 
 ### 1. Minor releases
 
-If a minor release is needed then create a GitHub action called `observability-dev/workflows/run-minor-release.yml`
+If a minor release is needed then create a GitHub action called `.github/workflows/run-minor-release.yml`
 
 ```yaml
 ---
@@ -46,7 +46,7 @@ Then do what's needed when a new minor release is requested.
 
 ### 2. Patch releases
 
-If a patch release is needed then create a GitHub action called `observability-dev/workflows/run-patch-release.yml`
+If a patch release is needed then create a GitHub action called `.github/workflows/run-patch-release.yml`
 
 ```yaml
 ---
@@ -80,4 +80,4 @@ Then do what's needed when a new patch release is requested.
 
 ### 3. Enable them in the orchestrator
 
-Modify ``.github/workflows/run-release.yml` and add the GitHub repository name in the minor or patch section.
+Add the GitHub repository name in the [minor](./minor) or [patch](./patch) files.
