@@ -67,7 +67,7 @@ runs:
       run: |-
         gh repo clone --repo "${REPO}"
         cd $PROJECT
-        git tag "${GITHUB_REF#refs/*/}"
+        git tag "${TYPE}-${GITHUB_REF#refs/*/}"
         git push --tags
       env:
         PROJECT: ${{ inputs.project }}

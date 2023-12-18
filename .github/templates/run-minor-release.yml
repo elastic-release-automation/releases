@@ -12,7 +12,7 @@ on:
   # Alternative 2
   push:
     tags:
-      - 'minor-[0-9]+.[0-9]+.[0-9]+'
+      - 'minor-[0-9]+.[0-9]+.0'
 
 permissions:
   contents: read
@@ -28,6 +28,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
+      - run: echo '### minor - ${{ inputs.version }}' >> $GITHUB_STEP_SUMMARY
       - run: echo 'add your code'
 
   # Alternative 2
@@ -36,6 +37,8 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
-      - run: |-
-          echo "${GITHUB_REF#refs/*/}"
-          echo 'add your code'
+      - name: setup release version
+        run: |-
+          VERSION=${GITHUB_REF#refs/*/minor-}
+          echo "### minor - ${VERSION}" >> $GITHUB_STEP_SUMMARY
+      - run: echo "add your code for ${VERSION}"
