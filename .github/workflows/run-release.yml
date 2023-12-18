@@ -36,7 +36,8 @@ jobs:
               core.setFailed(`Error loading 'minor' or 'patch' files: ${err}`)
               return
             }
-            const minorMatrix, patchMatrix = []
+            const minorMatrix= []
+            const patchMatrix = []
 
             minor.split(/\r?\n/).forEach(line => { minorMatrix.push(`${line}`) })
             patch.split(/\r?\n/).forEach(line => { patchMatrix.push(`${line}`) })
