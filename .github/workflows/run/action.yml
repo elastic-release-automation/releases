@@ -46,10 +46,17 @@ runs:
       shell: bash
       run: |-
         set +e
+        # as long as gh workflow run is not waiting for the workflow to be listened.
         sleep 5
-        gh run list --workflow=run-${{ inputs.release-type}}-release --repo "${REPO}" --limit 1 || true
+        gh run list --workflow=run-${{ inputs.release-type}}-release \
+            --repo "${REPO}" \
+            --limit 1 \
+            --json url,databaseId,conclusion,createdAt,workflowName | tee workflow.id
+        ID=$(jq -r '.[].databaseId' workflow.id)
+        URL=$(jq -r '.[].url' workflow.id)
         gh run \
             watch \
-            --repo "${REPO}" $(gh run list --workflow=run-${{ inputs.release-type}}-release --repo "${REPO}" --limit 1 --json databaseId --jq '.[].databaseId')
+            --repo "${REPO}" "${ID}"
+        echo '* `${{ inputs.project }}@${GITHUB_REF#refs/*/}` - See [build](${URL}).' >> $GITHUB_STEP_SUMMARY
       env:
         REPO: 'elastic-release-automation/${{ inputs.project }}'
