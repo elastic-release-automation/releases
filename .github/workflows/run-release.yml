@@ -44,6 +44,8 @@ jobs:
 
             core.setOutput('minor', minorMatrix)
             core.setOutput('patch', patchMatrix)
+            console.log(minorMatrix)
+            console.log(patchMatrix)
 
   orchestrate-minor-release:
     runs-on: ubuntu-latest
