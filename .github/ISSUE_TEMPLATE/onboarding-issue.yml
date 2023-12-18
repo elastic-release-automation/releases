@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please be sure `apmmachine` is admin in your GitHub repository
+        Please be sure `apmmachine` has got write permissions.
   - type: input
     id: project
     attributes:
