@@ -1,0 +1,45 @@
+
+---
+name: run
+
+inputs:
+  project:
+    description: 'What project to be called'
+    required: true
+  release-type:
+    description: 'release type'
+    required: true
+  vault-url:
+    description: 'Vault URL'
+    required: true
+  vault-role-id:
+    description: 'Vault role ID'
+    required: true
+  vault-secret-id:
+    description: 'Vault secret ID'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Configure github token
+      uses: elastic/apm-pipeline-library/.github/actions/github-token@current
+      with:
+        url: ${{ inputs.vault-url }}
+        roleId: ${{ inputs.vault-role-id }}
+        secretId: ${{ inputs.vault-secret-id }}
+
+    - name: Configure git user
+      uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
+        with:
+        username: ${{ env.GIT_USER }}
+        email: ${{ env.GIT_EMAIL }}
+        token: ${{ env.GITHUB_TOKEN }}
+
+    - run: |-
+        gh workflow run run-${{ inputs.release-type}}-release \
+          --field "version=${GITHUB_REF#refs/*/}" \
+          --repo "${REPO}" 
+      env:
+        REPO: 'elastic-release-automation/${{ inputs.project }}'
+        GH_TOKEN: ${{ env.GITHUB_TOKEN }}
+    

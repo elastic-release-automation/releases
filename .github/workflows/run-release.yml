@@ -18,27 +18,14 @@ jobs:
       matrix:
         project: [apm-server, observability-dev, observability-docs]
     steps:
-      - name: Configure github token
-        uses: elastic/apm-pipeline-library/.github/actions/github-token@current
+      - uses: actions/checkout@v4
+      - uses: ./.github/workflows/run-test
         with:
-          url: ${{ secrets.VAULT_ADDR }}
-          roleId: ${{ secrets.VAULT_ROLE_ID }}
-          secretId: ${{ secrets.VAULT_SECRET_ID }}
-
-      - name: Configure git user
-        uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
-        with:
-          username: ${{ env.GIT_USER }}
-          email: ${{ env.GIT_EMAIL }}
-          token: ${{ env.GITHUB_TOKEN }}
-      - run: |-
-          gh workflow run \
-            run-minor-release \
-            --field "version=${GITHUB_REF#refs/*/}" \
-            --repo "${REPO}" 
-        env:
-          REPO: 'elastic-release-automation/${{ matrix.project }}'
-          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
+          vault-url: ${{ secrets.VAULT_ADDR }}
+          vault-role-id: ${{ secrets.VAULT_ROLE_ID }}
+          vault-secret-id: ${{ secrets.VAULT_SECRET_ID }}
+          project: ${{ matrix.project }}
+          release-type: 'minor'
 
   orchestrate-patch-release:
     runs-on: ubuntu-latest
@@ -48,24 +35,11 @@ jobs:
       matrix:
         project: [apm-server]
     steps:
-      - name: Configure github token
-        uses: elastic/apm-pipeline-library/.github/actions/github-token@current
+      - uses: actions/checkout@v4
+      - uses: ./.github/workflows/run-test
         with:
-          url: ${{ secrets.VAULT_ADDR }}
-          roleId: ${{ secrets.VAULT_ROLE_ID }}
-          secretId: ${{ secrets.VAULT_SECRET_ID }}
-
-      - name: Configure git user
-        uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
-        with:
-          username: ${{ env.GIT_USER }}
-          email: ${{ env.GIT_EMAIL }}
-          token: ${{ env.GITHUB_TOKEN }}
-      - run: |-
-          gh workflow run \
-            run-patch-release \
-            --field "version=${GITHUB_REF#refs/*/}" \
-            --repo "${REPO}" 
-        env:
-          REPO: 'elastic-release-automation/${{ matrix.project }}'
-          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
+          vault-url: ${{ secrets.VAULT_ADDR }}
+          vault-role-id: ${{ secrets.VAULT_ROLE_ID }}
+          vault-secret-id: ${{ secrets.VAULT_SECRET_ID }}
+          project: ${{ matrix.project }}
+          release-type: 'patch'
