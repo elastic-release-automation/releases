@@ -53,7 +53,8 @@ jobs:
     needs: prepare
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.prepare.outputs.minor-matrix) }}
+      matrix:
+        project: ${{ fromJson(needs.prepare.outputs.minor-matrix) }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/run
@@ -70,7 +71,8 @@ jobs:
     needs: prepare
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.prepare.outputs.patch-matrix) }}
+      matrix:
+        project: ${{ fromJson(needs.prepare.outputs.patch-matrix) }}
     steps:
       - uses: actions/checkout@v4
       - run: echo "### minor - ${GITHUB_REF#refs/*/}" >> $GITHUB_STEP_SUMMARY
