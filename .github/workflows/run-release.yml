@@ -39,8 +39,8 @@ jobs:
             const minorMatrix= []
             const patchMatrix = []
 
-            minor.split(/\r?\n/).forEach(line => { minorMatrix.push(`${line}`) })
-            patch.split(/\r?\n/).forEach(line => { patchMatrix.push(`${line}`) })
+            minor.split(/\r?\n/).forEach(line => { if (line !== '') { minorMatrix.push(`${line}`) } })
+            patch.split(/\r?\n/).forEach(line => { if (line !== '') { patchMatrix.push(`${line}`) } })
 
             core.setOutput('minor', minorMatrix)
             core.setOutput('patch', patchMatrix)
