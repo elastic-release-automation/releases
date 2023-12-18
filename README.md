@@ -15,7 +15,14 @@ Then, the existing [GitHub action](https://github.com/elastic-release-automation
 
 ## How to onboard a new project?
 
-### 1. Minor releases
+### :robot: Automatically
+
+Grant write access to `apmmachine` in your GitHub repository and [raise this issue](TBC).
+Then wait for the automation to create all the scaffolding for you.
+
+### Manually
+
+#### 1. Minor releases
 
 If a minor release is needed, create a GitHub action called `.github/workflows/run-minor-release.yml`.
 
@@ -53,7 +60,7 @@ jobs:
 
 Then, do what's required when a new minor release is requested.
 
-### 2. Patch releases
+#### 2. Patch releases
 
 If a patch release is needed, then create a GitHub action called `.github/workflows/run-patch-release.yml`
 
@@ -93,10 +100,10 @@ jobs:
 
 Then, do what's required when a new patch release is requested.
 
-### 3. Enable them in the orchestrator
+#### 3. Enable them in the orchestrator
 
 Add the GitHub repository name in the [minor](./minor) or [patch](./patch) files.
 
-### 4. Grant write access to the apmmachine
+#### 4. Grant write access to the apmmachine
 
 The relevant machine account should be granted write permissions.

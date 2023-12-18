@@ -1,0 +1,16 @@
+name: Onboard your project
+description: Request the creation of all the release scaffolding for your repository
+title: "[release onboarding] request"
+# NOTE: onboarding-automation label is required by .github/workflows/onboarding-issue.yml
+labels: ["onboarding-automation", "automation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please be sure `apmmachine` is admin in your GitHub repository
+  - type: input
+    id: project
+    attributes:
+      label: Your GitHub repository in the elastic org (Required)
+      description: What GitHub repository?
+      placeholder: ex. apm-server
