@@ -57,6 +57,6 @@ runs:
         gh run \
             watch \
             --repo "${REPO}" "${ID}"
-        echo '* `${{ inputs.project }}@${GITHUB_REF#refs/*/}` - See [build](${URL}).' >> $GITHUB_STEP_SUMMARY
+        echo "* ${{ inputs.project }}@${GITHUB_REF#refs/*/} - See [build](${URL})." >> $GITHUB_STEP_SUMMARY
       env:
         REPO: 'elastic-release-automation/${{ inputs.project }}'
