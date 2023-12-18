@@ -29,6 +29,10 @@ on:
 permissions:
   contents: read
 
+# Avoid concurrency so we can watch the releases correctly
+concurrency:
+  group: ${{ github.workflow }}
+
 jobs:
   run-minor:
     runs-on: ubuntu-latest
@@ -59,6 +63,10 @@ on:
 permissions:
   contents: read
 
+# Avoid concurrency so we can watch the releases correctly
+concurrency:
+  group: ${{ github.workflow }}
+
 jobs:
   run-patch:
     runs-on: ubuntu-latest
@@ -69,7 +77,6 @@ jobs:
 ```
 
 Then do what's needed when a new patch release is requested.
-
 
 ### 3. Enable them in the orchestrator
 
