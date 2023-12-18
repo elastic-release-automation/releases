@@ -36,9 +36,12 @@ runs:
     - name: trigger workflow in ${{ inputs.project }}
       shell: bash
       run: |-
-        gh workflow run run-${{ inputs.release-type}}-release \
+        gh workflow run ${WORKFLOW_NAME} \
           --field "version=${GITHUB_REF#refs/*/}" \
-          --repo "${REPO}" 
+          --repo "${REPO}"
+        ID=$(gh run list --workflow=${WORKFLOW_NAME} --repo "${REPO}" --limit 1 --json workflowDatabaseId --jq '.[].workflowDatabaseId')
+        gh run watch --repo "${REPO}" $ID
       env:
         REPO: 'elastic-release-automation/${{ inputs.project }}'
         GH_TOKEN: ${{ env.GITHUB_TOKEN }}
+        WORKFLOW_NAME: run-${{ inputs.release-type}}-release
