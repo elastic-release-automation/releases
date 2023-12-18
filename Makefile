@@ -50,7 +50,7 @@ link-created-github-issues: ## Create GitHub action env variables on the fly
 prepare-repo: ## (INTERNAL) Prepare the repository for GitHub actions
 	@echo "::group::$@"  # Helping to group logs in GitHub actions
 	if [ ! -d .repos/$(PROJECT) ] ; then \
-		gh repo clone $(OWNER)/$(PROJECT) .repos/$(PROJECT) \
+		gh repo clone $(OWNER)/$(PROJECT) .repos/$(PROJECT) ; \
 	fi
 	git checkout main
 	@echo "::endgroup::"
