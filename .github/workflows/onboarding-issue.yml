@@ -43,7 +43,7 @@ jobs:
       - uses: stefanbuck/github-issue-parser@v3
         id: issue-parser
         with:
-          template-path: .github/ISSUE_TEMPLATE/onboarding-issue.yaml
+          template-path: .github/ISSUE_TEMPLATE/onboarding-issue.yml
 
       - uses: elastic/apm-pipeline-library/.github/actions/github-token@current
         with:
