@@ -18,6 +18,19 @@ jobs:
       matrix:
         project: [apm-server, observability-dev, observability-docs]
     steps:
+      - name: Configure github token
+        uses: elastic/apm-pipeline-library/.github/actions/github-token@current
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          roleId: ${{ secrets.VAULT_ROLE_ID }}
+          secretId: ${{ secrets.VAULT_SECRET_ID }}
+
+      - name: Configure git user
+        uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
+        with:
+          username: ${{ env.GIT_USER }}
+          email: ${{ env.GIT_EMAIL }}
+          token: ${{ env.GITHUB_TOKEN }}
       - run: |-
           gh workflow run \
             run-minor-release \
@@ -25,6 +38,7 @@ jobs:
             --repo "${REPO}" 
         env:
           REPO: 'elastic-release-automation/${{ matrix.project }}'
+          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
 
   orchestrate-patch-release:
     runs-on: ubuntu-latest
@@ -34,6 +48,19 @@ jobs:
       matrix:
         project: [apm-server]
     steps:
+      - name: Configure github token
+        uses: elastic/apm-pipeline-library/.github/actions/github-token@current
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          roleId: ${{ secrets.VAULT_ROLE_ID }}
+          secretId: ${{ secrets.VAULT_SECRET_ID }}
+
+      - name: Configure git user
+        uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
+        with:
+          username: ${{ env.GIT_USER }}
+          email: ${{ env.GIT_EMAIL }}
+          token: ${{ env.GITHUB_TOKEN }}
       - run: |-
           gh workflow run \
             run-patch-release \
@@ -41,3 +68,4 @@ jobs:
             --repo "${REPO}" 
         env:
           REPO: 'elastic-release-automation/${{ matrix.project }}'
+          GH_TOKEN: ${{ env.GITHUB_TOKEN }}
