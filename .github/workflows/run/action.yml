@@ -34,6 +34,7 @@ runs:
         token: ${{ env.GITHUB_TOKEN }}
 
     - name: trigger workflow in ${{ inputs.project }}
+      shell: bash
       run: |-
         gh workflow run run-${{ inputs.release-type}}-release \
           --field "version=${GITHUB_REF#refs/*/}" \
