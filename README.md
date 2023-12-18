@@ -17,8 +17,8 @@ Then, the existing [GitHub action](https://github.com/elastic-release-automation
 
 ### :robot: Automatically
 
-Grant write access to `apmmachine` in your GitHub repository and [raise this issue](TBC).
-Then wait for the automation to create all the scaffolding for you.
+Grant write access to `apmmachine` in your GitHub repository and [raise this issue](https://github.com/elastic-release-automation/releases/issues/new?assignees=&labels=onboarding-automation%2Cautomation&projects=&template=onboarding-issue.yml&title=%5Brelease+onboarding%5D+request).
+Then, wait for the automation to create all the scaffolding for you.
 
 ### Manually
 
